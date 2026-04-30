@@ -158,7 +158,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/admin/analytics');
+        const res = await fetch('http://127.0.0.1:5000/api/admin/analytics');
         if (!res.ok) throw new Error('Failed to fetch analytics');
         const data = await res.json();
         setStats(data);

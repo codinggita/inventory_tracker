@@ -110,7 +110,7 @@ const ManageInventory = () => {
                 <tbody className="divide-y divide-slate-50">
                   {filteredInventory.map((item) => {
                     const idKey = `${item.productId}-${item.storeId}`;
-                    const isLow = item.stock < 5 && item.stock > 0;
+                    const isLow = item.stock < 10 && item.stock > 0;
                     const isOut = item.stock <= 0;
 
                     return (
@@ -135,7 +135,7 @@ const ManageInventory = () => {
                             isLow ? 'bg-amber-50 text-amber-600 border-amber-100' : 
                             'bg-emerald-50 text-emerald-600 border-emerald-100'
                           }`}>
-                            {isOut ? 'Critical: Out' : isLow ? 'Warning: Low' : 'Healthy Stock'}
+                            {isOut ? 'Critical: Out' : isLow ? 'Warning: Less Stock' : 'Healthy Stock'}
                           </span>
                         </td>
                         <td className="px-10 py-6 text-right">
