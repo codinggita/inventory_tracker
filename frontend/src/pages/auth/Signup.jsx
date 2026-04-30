@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import { useAuth } from '../../context/AuthContext';
-import { User, Mail, Lock, ShoppingBag, ArrowRight, AlertCircle, Loader2 } from 'lucide-react';
+import { User, Mail, Lock, ShoppingBag, ArrowRight, AlertCircle, Loader2, Store, FileText, UserCheck } from 'lucide-react';
 
 const Signup = () => {
   const [email, setEmail]       = useState('');
@@ -11,6 +11,12 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [confirm, setConfirm]   = useState('');
   const [role, setRole]         = useState('user');
+  
+  // Business fields
+  const [shopName, setShopName] = useState('');
+  const [licenseNo, setLicenseNo] = useState('');
+  const [ownerName, setOwnerName] = useState('');
+
   const [error, setError]       = useState('');
   const [loading, setLoading]   = useState(false);
   const { register }            = useAuth();
@@ -35,6 +41,11 @@ const Signup = () => {
         name: username.trim() || 'User',
         password,
         role: role === 'admin' ? 'dealer' : 'user',
+        // Additional business fields
+        shopName: role === 'admin' ? shopName.trim() : null,
+        licenseNo: role === 'admin' ? licenseNo.trim() : null,
+        ownerName: role === 'admin' ? ownerName.trim() : null,
+        verified: role === 'admin' ? true : false // Quick verification for now
       };
 
       await register(userData);
@@ -55,8 +66,8 @@ const Signup = () => {
 
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 p-6 font-sans relative overflow-hidden">
-      {/* Decorative Elements */}
+   
+   <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 p-6 font-sans relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute top-[-10%] right-[-10%] w-96 h-96 bg-emerald-200/20 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-[-10%] left-[-10%] w-64 h-64 bg-teal-200/20 rounded-full blur-3xl animate-pulse delay-700" />
@@ -65,9 +76,9 @@ const Signup = () => {
       <motion.div 
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        className="max-w-lg w-full bg-white/80 backdrop-blur-2xl rounded-[48px] shadow-2xl p-10 md:p-12 space-y-10 border border-white/60 relative z-10"
+        className="max-w-2xl w-full bg-white/80 backdrop-blur-2xl rounded-[48px] shadow-2xl p-10 md:p-12 space-y-10 border border-white/60 relative z-10"
       >
-        {/* Logo + Heading */}
+
         <div className="text-center space-y-4">
           <motion.div 
             whileHover={{ scale: 1.1, rotate: -5 }}
@@ -81,7 +92,7 @@ const Signup = () => {
           </div>
         </div>
 
-        {/* Error Alert */}
+
         <AnimatePresence>
           {error && (
             <motion.div 
@@ -96,9 +107,9 @@ const Signup = () => {
           )}
         </AnimatePresence>
 
-        {/* Form */}
+
         <form className="space-y-8" onSubmit={handleSubmit}>
-          {/* Role Selection */}
+
           <div className="space-y-3">
             <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-1 text-center">I am a…</label>
             <div className="grid grid-cols-2 gap-4">
@@ -158,6 +169,67 @@ const Signup = () => {
               </div>
             </div>
 
+            {/* Business Verification Fields */}
+            <AnimatePresence>
+              {role === 'admin' && (
+                <motion.div 
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="col-span-full grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-100"
+                >
+                  <div className="col-span-full pb-2">
+                    <p className="text-xs font-black text-emerald-600 uppercase tracking-[0.2em]">Retail Verification Details</p>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Shop Name</label>
+                    <div className="relative group">
+                      <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                        <Store className="h-5 w-5 text-slate-300 group-focus-within:text-emerald-500 transition-colors" />
+                      </div>
+                      <input
+                        type="text" required
+                        className="block w-full pl-14 pr-5 py-4 bg-slate-50 border-2 border-slate-50 rounded-[20px] focus:bg-white focus:border-emerald-500 outline-none transition-all text-slate-900 font-bold"
+                        placeholder="Elite Electronics"
+                        value={shopName}
+                        onChange={(e) => setShopName(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Business License No.</label>
+                    <div className="relative group">
+                      <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                        <FileText className="h-5 w-5 text-slate-300 group-focus-within:text-emerald-500 transition-colors" />
+                      </div>
+                      <input
+                        type="text" required
+                        className="block w-full pl-14 pr-5 py-4 bg-slate-50 border-2 border-slate-50 rounded-[20px] focus:bg-white focus:border-emerald-500 outline-none transition-all text-slate-900 font-bold"
+                        placeholder="LIC-998877"
+                        value={licenseNo}
+                        onChange={(e) => setLicenseNo(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2 col-span-full">
+                    <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Owner Name</label>
+                    <div className="relative group">
+                      <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                        <UserCheck className="h-5 w-5 text-slate-300 group-focus-within:text-emerald-500 transition-colors" />
+                      </div>
+                      <input
+                        type="text" required
+                        className="block w-full pl-14 pr-5 py-4 bg-slate-50 border-2 border-slate-50 rounded-[20px] focus:bg-white focus:border-emerald-500 outline-none transition-all text-slate-900 font-bold"
+                        placeholder="John Doe"
+                        value={ownerName}
+                        onChange={(e) => setOwnerName(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             <div className="space-y-2">
               <label className="block text-xs font-black text-slate-400 uppercase tracking-widest ml-1">Password</label>
               <div className="relative group">
@@ -202,7 +274,7 @@ const Signup = () => {
           >
             {loading ? <Loader2 className="w-6 h-6 animate-spin" /> : (
               <>
-                <span>Create Account</span>
+                <span>{role === 'admin' ? 'Verify & Register Business' : 'Create Account'}</span>
                 <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
               </>
             )}
