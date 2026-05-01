@@ -8,7 +8,7 @@ This platform eliminates wasted retail trips by enabling users to check **real-t
 
 ## Figma link
 
-https://www.figma.com/proto/JdCT2q8s6tX0m3h3s8a8t9/Inventory-Tracking-System?type=design&node-id=1-2&t=6w9b9b9b9b9b9b9b9b9b-0&scaling=min-zoom&page-id=0%3A1
+https://www.figma.com/design/haEcheOCg5vZJG5Bv9N4Eg/StockReserve-Inventory-Manager?node-id=24-2&t=VMUOIpuFXRkbaETG-1
 
 ## 🚀 Features
 
