@@ -6,7 +6,7 @@ import MainLayout from '../../components/MainLayout';
 import Timer from '../../components/Timer';
 import { formatCurrency } from '../../utils/formatters';
 import { useAppContext } from '../../context/AppContext';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 import { ShoppingBag, Clock, CheckCircle2, XCircle, AlertCircle, Calendar, MapPin, Trash2, Check, X } from 'lucide-react';
 
 // ── Status badge config ─────────────────────────────────────────────

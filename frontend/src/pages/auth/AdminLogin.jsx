@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 import { getRegisteredUsers } from './Signup';
 import { Mail, Lock, Building2, ArrowRight, AlertCircle, Loader2, ShieldCheck } from 'lucide-react';
 
@@ -11,7 +11,7 @@ const AdminLogin = () => {
   const [password, setPassword] = useState('');
   const [error, setError]     = useState('');
   const [loading, setLoading] = useState(false);
-  const { login }             = useAuth();
+  const { setAuth }           = useAuth();
   const navigate              = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -44,7 +44,7 @@ const AdminLogin = () => {
       }
 
       const { password: _pw, ...safeUser } = account;
-      login(safeUser, 'mock-jwt-' + account.id);
+      setAuth(safeUser, 'mock-jwt-' + account.id);
       
       toast.success(`Welcome back, ${account.name}!`);
 

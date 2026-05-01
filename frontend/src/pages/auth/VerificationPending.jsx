@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ShoppingBag, Clock, ArrowRight, ShieldCheck, Mail, LogOut, Loader2 } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 import { toast } from 'sonner';
 import { getRegisteredUsers, saveRegisteredUsers } from './Signup';
 
 const VerificationPending = () => {
-  const { user, logout, login } = useAuth();
+  const { user, logout, setAuth } = useAuth();
   const navigate = useNavigate();
 
   // Simulation: Auto-approve after 5 seconds for demo purposes
@@ -25,7 +25,7 @@ const VerificationPending = () => {
         saveRegisteredUsers(updatedUsers);
         
         const approvedUser = updatedUsers.find(u => u.id === user.id);
-        login(approvedUser, 'mock-jwt-' + approvedUser.id);
+        setAuth(approvedUser, 'mock-jwt-' + approvedUser.id);
         
         toast.success('Your business account has been approved!', {
           description: 'Redirecting to your dashboard...',

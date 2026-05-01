@@ -3,13 +3,13 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { toast } from 'sonner';
 import { ShoppingBag, ArrowRight, ArrowLeft, Store, User, FileText, MapPin, Phone, Loader2 } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 import { saveRegisteredUsers, getRegisteredUsers } from './Signup';
 
 const BusinessVerification = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login } = useAuth();
+  const { setAuth } = useAuth();
   const { newUser } = location.state || {};
 
   const [formData, setFormData] = useState({
@@ -61,7 +61,7 @@ const BusinessVerification = () => {
       saveRegisteredUsers([...existing, finalUser]);
 
       const { password: _pw, ...safeUser } = finalUser;
-      login(safeUser, 'mock-jwt-' + finalUser.id);
+      setAuth(safeUser, 'mock-jwt-' + finalUser.id);
 
       toast.success('Verification Step Complete!', {
         description: 'Your credentials have been pre-verified.',
