@@ -314,4 +314,7 @@ const Signup = () => {
   );
 };
 
+export const getRegisteredUsers = () => JSON.parse(localStorage.getItem('registeredUsers') || '[]');
+export const saveRegisteredUsers = (users) => localStorage.setItem('registeredUsers', JSON.stringify(users));
+
 export default Signup;
