@@ -6,7 +6,8 @@ import MainLayout from '../../components/MainLayout';
 
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../../context/AppContext';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
+import api from '../../services/api';
 import BASE_URL from '../../services/apiConfig';
 
 
@@ -158,10 +159,8 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchAnalytics = async () => {
       try {
-        const res = await fetch('http://127.0.0.1:5000/api/admin/analytics');
-        if (!res.ok) throw new Error('Failed to fetch analytics');
-        const data = await res.json();
-        setStats(data);
+        const response = await api.get('/admin/analytics');
+        setStats(response.data);
       } catch (err) {
         console.error(err);
       } finally {

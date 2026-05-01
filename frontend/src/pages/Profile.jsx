@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import MainLayout from '../components/MainLayout';
 
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { useAppContext } from '../context/AppContext';
 import { User, Mail, Shield, Calendar, Settings, Bell, CreditCard, Share2, LogOut, ChevronRight } from 'lucide-react';
 import Button from '../components/Button';
