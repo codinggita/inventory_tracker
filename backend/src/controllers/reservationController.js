@@ -34,3 +34,20 @@ exports.confirmReservation = (req, res) => {
     res.status(404).json({ message: 'Reservation not found' });
   }
 };
+
+exports.cancelReservation = (req, res) => {
+  const { id } = req.params;
+  const reservation = db.reservations.find(r => r.id === parseInt(id));
+  if (reservation) {
+    // Return stock back
+    const item = db.inventory.find(i => i.productId === reservation.productId && i.storeId === reservation.storeId);
+    if (item) {
+      item.stock += 1;
+      socketService.emitStockUpdate(item.productId, item.storeId, item.stock);
+    }
+    reservation.status = 'cancelled';
+    res.json({ message: 'Reservation cancelled successfully', reservation });
+  } else {
+    res.status(404).json({ message: 'Reservation not found' });
+  }
+};
