@@ -70,11 +70,11 @@ const ManageInventory = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div>
             <h1 className="text-4xl font-black text-slate-900 tracking-tight">Inventory Control</h1>
-            <p className="text-slate-500 font-bold mt-1">Manage stock levels across your retail network</p>
+            <p className="text-slate-600 font-bold mt-1">Manage stock levels across your retail network</p>
           </div>
           
           <div className="flex items-center gap-4 bg-white p-2 rounded-2xl border border-slate-100 shadow-xl">
-            <span className="text-xs font-black text-slate-400 uppercase tracking-widest pl-4">Filter Store:</span>
+            <span className="text-[10px] font-black text-slate-900 uppercase tracking-[0.2em] pl-4">Filter Store</span>
             <select 
               className="bg-slate-50 border-none rounded-xl font-bold text-slate-700 focus:ring-2 focus:ring-emerald-500 transition-all outline-none py-2 px-4"
               value={filterStore}
@@ -101,10 +101,10 @@ const ManageInventory = () => {
               <table className="w-full text-left">
                 <thead>
                   <tr className="bg-slate-50 border-b border-slate-100">
-                    <th className="px-10 py-6 text-xs font-black text-slate-400 uppercase tracking-widest">Product Intelligence</th>
-                    <th className="px-10 py-6 text-xs font-black text-slate-400 uppercase tracking-widest">Retail Location</th>
-                    <th className="px-10 py-6 text-xs font-black text-slate-400 uppercase tracking-widest text-center">Status</th>
-                    <th className="px-10 py-6 text-xs font-black text-slate-400 uppercase tracking-widest text-right">Quick Stock Adjustment</th>
+                    <th className="px-10 py-6 text-xs font-black text-slate-900 uppercase tracking-widest">Product Intelligence</th>
+                    <th className="px-10 py-6 text-xs font-black text-slate-900 uppercase tracking-widest">Retail Location</th>
+                    <th className="px-10 py-6 text-xs font-black text-slate-900 uppercase tracking-widest text-center">Status</th>
+                    <th className="px-10 py-6 text-xs font-black text-emerald-600 uppercase tracking-widest text-right">Quick Stock Adjustment</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-50">
@@ -127,7 +127,7 @@ const ManageInventory = () => {
                           </div>
                         </td>
                         <td className="px-10 py-6">
-                          <p className="font-black text-slate-700 text-sm">{item.store.name}</p>
+                          <p className="font-black text-slate-900 text-sm">{item.store.name}</p>
                         </td>
                         <td className="px-10 py-6 text-center">
                           <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border-2 whitespace-nowrap ${
@@ -142,8 +142,8 @@ const ManageInventory = () => {
                           <div className="flex items-center justify-end gap-3">
                             <input
                               type="number"
-                              className={`w-24 px-4 py-2.5 bg-slate-50 border-2 rounded-xl text-center font-black outline-none transition-all focus:ring-4 focus:ring-emerald-500/10 ${
-                                updatingId === idKey ? 'border-emerald-500 opacity-50' : 'border-slate-100 hover:border-slate-200 focus:border-emerald-500'
+                              className={`w-24 px-4 py-2.5 bg-white border-2 rounded-xl text-center font-black text-slate-900 outline-none transition-all focus:ring-4 focus:ring-emerald-500/10 ${
+                                updatingId === idKey ? 'border-emerald-500 opacity-50' : 'border-slate-200 hover:border-emerald-500 focus:border-emerald-500'
                               }`}
                               defaultValue={item.stock}
                               onBlur={(e) => handleStockUpdate(item.productId, item.storeId, e.target.value)}

@@ -2,8 +2,10 @@ import BASE_URL from './apiConfig';
 
 const productService = {
   getAllProducts: async (params = {}) => {
-    const url = new URL(`${BASE_URL}/products`);
-    if (params.q) url.searchParams.append('q', params.q);
+    const queryParams = new URLSearchParams();
+    if (params.q) queryParams.append('q', params.q);
+    const queryString = queryParams.toString();
+    const url = `${BASE_URL}/products${queryString ? `?${queryString}` : ''}`;
     
     const res = await fetch(url);
     if (!res.ok) throw new Error('Failed to fetch products');
@@ -20,12 +22,14 @@ const productService = {
   },
   
   searchProducts: async (query, location) => {
-    const url = new URL(`${BASE_URL}/products`);
-    if (query) url.searchParams.append('q', query);
+    const queryParams = new URLSearchParams();
+    if (query) queryParams.append('q', query);
     if (location && location.lat && location.lng) {
-      url.searchParams.append('lat', location.lat);
-      url.searchParams.append('lng', location.lng);
+      queryParams.append('lat', location.lat);
+      queryParams.append('lng', location.lng);
     }
+    const queryString = queryParams.toString();
+    const url = `${BASE_URL}/products${queryString ? `?${queryString}` : ''}`;
     
     const res = await fetch(url);
     if (!res.ok) throw new Error('Failed to search products');
@@ -33,12 +37,14 @@ const productService = {
   },
   
   getProductStores: async (productId, location) => {
-    const url = new URL(`${BASE_URL}/inventory`);
-    url.searchParams.append('productId', productId);
+    const queryParams = new URLSearchParams();
+    queryParams.append('productId', productId);
     if (location && location.lat && location.lng) {
-      url.searchParams.append('lat', location.lat);
-      url.searchParams.append('lng', location.lng);
+      queryParams.append('lat', location.lat);
+      queryParams.append('lng', location.lng);
     }
+    const queryString = queryParams.toString();
+    const url = `${BASE_URL}/inventory${queryString ? `?${queryString}` : ''}`;
 
     const res = await fetch(url);
     if (!res.ok) throw new Error('Failed to fetch inventory');
