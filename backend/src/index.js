@@ -28,6 +28,24 @@ socketService.init(io);
 app.use(cors());
 app.use(express.json());
 
+// Root route for API discovery
+app.get('/', (req, res) => {
+  res.send(`
+    <div style="font-family: sans-serif; padding: 40px; line-height: 1.6;">
+      <h1 style="color: #10b981;">🚀 Shelf Scout Backend is Live</h1>
+      <p>The API is accessible at <a href="/api" style="color: #0ea5e9;">/api</a></p>
+      <div style="background: #f1f5f9; padding: 20px; border-radius: 12px; max-width: 500px;">
+        <h3 style="margin-top: 0;">Quick Links:</h3>
+        <ul style="margin-bottom: 0;">
+          <li><a href="/api/products">View All Products</a></li>
+          <li><a href="/api/inventory">Live Inventory Status</a></li>
+          <li><a href="/api/stores">Retail Locations</a></li>
+        </ul>
+      </div>
+    </div>
+  `);
+});
+
 // Request logging middleware
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
@@ -70,10 +88,9 @@ app.get('/api', (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-if (process.env.NODE_ENV !== 'production') {
-  server.listen(PORT, () => {
-    console.log(`Backend server running on port ${PORT}`);
-  });
-}
+server.listen(PORT, () => {
+  console.log(`Backend server running on port ${PORT}`);
+});
+
 
 module.exports = app;
